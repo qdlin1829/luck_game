@@ -4,7 +4,6 @@ import (
 	"errors"
 	"log"
 	"luck_game/model"
-	"time"
 )
 
 type UserService struct {
@@ -50,23 +49,4 @@ func (u *UserService) Login (username, password string) (user model.User, err er
 
 	return tmp, err
 
-}
-
-func (u *UserService) Cache (key string, data interface{}, exptime time.Duration) (err error ){
-	err = rdb.Set(key, data, exptime*time.Second).Err()
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-
-func (u *UserService) GetCache (key string) (ret string, err error ){
-	val, err := rdb.Get(key).Result()
-	if err != nil {
-		return val, err
-	}
-
-	return val, nil
 }
