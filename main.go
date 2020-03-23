@@ -23,7 +23,9 @@ func main()  {
 	shopApi := r.Group("")
 	shopApi.Use(middleware.AuthMiddleware())
 	{
-		shopApi.POST("/user_info", shop.Update)
+		shopApi.POST("/user_info", shop.UserInfo)
+		shopApi.POST("/user_withdraw", shop.Withdraw)
+		shopApi.POST("/user_editpass", shop.EditPasswd)
 		//shopApi.POST("/user_info", shop.GetInfo)
 		//shopApi.POST("/user_update", shop.Update)
 		//shopApi.POST("/cart_add", shop.Update)

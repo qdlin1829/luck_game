@@ -3,10 +3,14 @@ package shop
 
 import "github.com/gin-gonic/gin"
 
-func GetInfo(c *gin.Context)  {
+func UserInfo(c *gin.Context)  {
 
 }
 
-func Update(c *gin.Context)  {
+func Withdraw(c *gin.Context)  {
+
+}
+
+func EditPasswd(c *gin.Context){
 
 }
