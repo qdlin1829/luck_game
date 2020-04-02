@@ -1,14 +1,15 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"luck_game/app/game"
 	"luck_game/app/shop"
-	"luck_game/app/websocket"
+	"luck_game/app/socket"
 	"luck_game/middleware"
+
+	"github.com/gin-gonic/gin"
 )
 
-
-func main()  {
+func main() {
 	gin.SetMode("debug")
 	r := gin.Default()
 
@@ -18,7 +19,9 @@ func main()  {
 	//r.POST("/goods_list", shop.GoodsList)
 	//r.POST("/sms_send", shop.GoodsList)
 	//r.POST("/goods_info", shop.GoodsInfo)
-	r.GET("/ws", websocket.Ws)
+	r.GET("/ws", socket.Ws)
+	r.POST("/sms_send", shop.Send)
+	r.GET("/issue", shop.Issue)
 
 	shopApi := r.Group("")
 	shopApi.Use(middleware.AuthMiddleware())
@@ -41,6 +44,24 @@ func main()  {
 
 	}
 
+	gameApi := r.Group("")
+	{
+		gameApi.GET("/index", game.Index)
+		gameApi.GET("/set", game.Set)
+	}
+
+	// i := []int{1}
+	//a := config.Encrypt("222A", 8, i)
+
+	//b := config.Decrypt("222A", 8, "YmxmvwKn")
+
+	// var a = []int{1,2,3,4,5,6}
+	// var str = []string{}
+	// for i:=0; i<len(a); i++ {
+
+	// 	str  = append(str, fmt.Sprintf("%d", a[i]))
+	// }
+	// fmt.Println(strings.Join(str, ","))
 
 	r.Run(":8080")
 }

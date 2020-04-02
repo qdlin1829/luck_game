@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/go-redis/redis"
 )
 
@@ -22,6 +23,7 @@ func initRedis() (err error) {
 
 	_, err = rdb.Ping().Result()
 	if err != nil {
+		fmt.Println(err.Error())
 		return err
 	}
 

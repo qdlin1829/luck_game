@@ -4,10 +4,17 @@ import (
 	"errors"
 	"log"
 	"luck_game/model"
+	"time"
 )
 
 type UserService struct {
 
+}
+
+type GameData struct {
+	Code int `json:"code"`
+	Message string `json:"message"`
+	Content interface{} `json:"content"`
 }
 
 func (u *UserService) Register(username, password string) (user model.User, err error) {
@@ -25,6 +32,8 @@ func (u *UserService) Register(username, password string) (user model.User, err 
 
 	tmp.Username = username
 	tmp.Password =  password
+	tmp.CreateTime = time.Now().Unix()
+	tmp.UpdateTime = time.Now().Unix()
 
 	_, err = Db.Table("go_user").InsertOne(&tmp)
 
@@ -50,4 +59,8 @@ func (u *UserService) Login (username, password string) (user model.User, err er
 
 	return tmp, err
 
+}
+
+func (u *UserService) getCahce (key string) {
+	  rdb.Get(key).Result()
 }
