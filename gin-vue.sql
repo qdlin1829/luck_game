@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2020-04-10 18:27:53
+Date: 2020-04-10 20:02:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -76,9 +76,6 @@ CREATE TABLE `g_order_goods` (
 -- ----------------------------
 -- Records of g_order_goods
 -- ----------------------------
-INSERT INTO `g_order_goods` VALUES ('1', '1', '1', '201', '1', '2', '1', '10.00');
-INSERT INTO `g_order_goods` VALUES ('2', '2', '2', '230', '1', '2', '1', '20.00');
-INSERT INTO `g_order_goods` VALUES ('5', '1', '1', '201', '3', '2', '1', '0.00');
 
 -- ----------------------------
 -- Table structure for g_order_info
@@ -88,21 +85,29 @@ CREATE TABLE `g_order_info` (
   `order_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `order_sn` varchar(30) NOT NULL COMMENT '订单号',
   `order_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT ' 类型:1幸运飞艇',
+  `order_status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态: 1待开奖 101未中奖 201已中奖 301无效',
   `user_id` int(11) unsigned NOT NULL COMMENT '用户id',
   `sq` varchar(20) NOT NULL COMMENT '期号',
-  `order_status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态: 1待开奖 101未中奖 201已中奖 301无效',
+  `pos` tinyint(1) unsigned NOT NULL COMMENT '位置0-10 0位是总和',
+  `number` varchar(10) NOT NULL COMMENT '购买数:大小单双1-10',
+  `pay_amount` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '赔付金额',
+  `odds` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '赔率',
   `order_amount` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '订单金额',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `uq_ordersn` (`order_sn`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='订单主表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='订单主表';
 
 -- ----------------------------
 -- Records of g_order_info
 -- ----------------------------
-INSERT INTO `g_order_info` VALUES ('1', '232', '1', '6', '20169', '1', '1.00', '0', '0');
-INSERT INTO `g_order_info` VALUES ('2', '456', '1', '6', '20168', '1', '1.00', '0', '0');
+INSERT INTO `g_order_info` VALUES ('1', '232', '1', '1', '6', '20169', '0', '大', '0.00', '2.12', '1.00', '0', '0');
+INSERT INTO `g_order_info` VALUES ('2', '456', '1', '1', '6', '20168', '0', '单', '0.00', '1.94', '1.00', '0', '0');
+INSERT INTO `g_order_info` VALUES ('3', '333', '1', '1', '1', '20162', '1', '3', '0.00', '1.94', '10.00', '0', '0');
+INSERT INTO `g_order_info` VALUES ('5', '2321', '1', '1', '6', '201691', '0', '大', '0.00', '2.12', '1.00', '0', '0');
+INSERT INTO `g_order_info` VALUES ('6', '4561', '1', '1', '6', '201681', '0', '单', '0.00', '1.94', '1.00', '0', '0');
+INSERT INTO `g_order_info` VALUES ('7', '3331', '1', '1', '6', '201621', '1', '3', '0.00', '1.94', '10.00', '0', '0');
 
 -- ----------------------------
 -- Table structure for g_user
