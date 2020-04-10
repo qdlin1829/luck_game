@@ -1,34 +1,43 @@
 package middleware
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"luck_game/utils"
+	"time"
 )
 
 const (
 	// 可自定义盐值
 	TokenSalt = "default_salt"
 )
-
-func MD5(data []byte) string {
-	_md5 := md5.New()
-	_md5.Write(data)
-	return hex.EncodeToString(_md5.Sum([]byte("")))
-}
+var UserId int64 = 0
 
 func AuthMiddleware() gin.HandlerFunc{
 	return func(c *gin.Context){
+		app := utils.Gin{C:c}
 		token := c.Request.Header.Get("token")
 		if token == ""{
 			c.Abort()
-			c.JSON(http.StatusUnauthorized,gin.H{"message":"访问未授权"})
+			app.Response(0, "访问未授权", nil )
 			return
 		}
 
+		ret, err := utils.ParseToken(token)
+		if err != nil {
+			c.Abort()
+			app.Response(0, "token无效", nil )
+			return
+		}
+		if time.Now().Unix() > ret.ExpiresAt {
+			c.Abort()
+			app.Response(0, "token过期请重新登陆", nil )
+			return
+		}
+
+		UserId = ret.UserId
 
 		//c.Writer.Header().Set("X-Request-Id", uuid.NewV4().String())
 		c.Next()
+
 	}
 }

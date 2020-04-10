@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"luck_game/config"
 	"luck_game/model"
+	"net/http"
 	"strings"
 	"time"
 )
@@ -42,7 +43,7 @@ func (g *GameService) Set() (ret interface{}, err error) {
 
 	data := gameData{}
 	url := "https://www.131313.com/data/Current/xyft/CurIssue.json?" + strings.ToUpper(config.Md5(string(time.Now().Unix())))
-
+	resp,err := http.Get(url)
 	if err != nil {
 		return data, err
 	}
