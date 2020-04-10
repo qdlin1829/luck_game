@@ -26,7 +26,7 @@ func (o *OrderService)GetOrderCount(orderArg model.OrderSerach)(int64, error){
 }
 
 
-func (o *OrderService)GetOrderList(orderArg model.OrderSerach)([]*model.OrderGoodsList, error){
+func (o *OrderService)GetOrderList(orderArg model.OrderSerach)([]model.OrderInfo, error){
 	orders := []model.OrderInfo{}
 
 
@@ -36,31 +36,31 @@ func (o *OrderService)GetOrderList(orderArg model.OrderSerach)([]*model.OrderGoo
 		return nil,err
 	}
 
-	var order_ids []int
-	for i:=0; i<len(orders); i++ {
-		order_ids = append(order_ids, int(orders[i].OrderId))
-	}
+	//var order_ids []int
+	//for i:=0; i<len(orders); i++ {
+	//	order_ids = append(order_ids, int(orders[i].OrderId))
+	//}
 
-	goods := []model.OrderGoods{}
-	Db.Table("g_order_goods").In("order_id", order_ids).Find(&goods)
+	//goods := []model.OrderGoods{}
+	//Db.Table("g_order_goods").In("order_id", order_ids).Find(&goods)
+	//
+	//order_goods := []*model.OrderGoodsList{}
+	//for _,val := range orders {
+	//	OrderGoodsList := &model.OrderGoodsList{
+	//		OrderInfo: val,
+	//	}
+	//
+	//	for _,vv := range goods  {
+	//		if val.OrderId == vv.OrderId {
+	//			OrderGoodsList.OrderGoods = []model.OrderGoods{vv}
+	//			break
+	//		}
+	//	}
+	//
+	//	order_goods = append(order_goods, OrderGoodsList)
+	//}
 
-	order_goods := []*model.OrderGoodsList{}
-	for _,val := range orders {
-		OrderGoodsList := &model.OrderGoodsList{
-			OrderInfo: val,
-		}
-
-		for _,vv := range goods  {
-			if val.OrderId == vv.OrderId {
-				OrderGoodsList.OrderGoods = []model.OrderGoods{vv}
-				break
-			}
-		}
-
-		order_goods = append(order_goods, OrderGoodsList)
-	}
-
-	return order_goods, nil
+	return orders, nil
 }
 
 

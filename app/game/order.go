@@ -2,6 +2,7 @@ package game
 
 import (
 	"github.com/gin-gonic/gin"
+	"luck_game/middleware"
 	"luck_game/model"
 	"luck_game/service"
 	"luck_game/utils"
@@ -21,7 +22,7 @@ func GetOrderList(c *gin.Context){
 		app.Response(0, "参数错误", data)
 		return
 	}
-
+	order.UserId = int(middleware.UserId)
 	count, err := OrderService.GetOrderCount(order)
 	if err != nil {
 		app.Response(0, err.Error(), data)
