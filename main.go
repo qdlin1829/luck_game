@@ -51,6 +51,8 @@ func main() {
 		gameApi.GET("/index", game.Index)
 		gameApi.POST("/editPwd", game.EditPwd)
 		gameApi.POST("/getOrderList", game.GetOrderList)
+		gameApi.POST("/buy", game.Buy)
+
 	}
 
 	// i := []int{1}
