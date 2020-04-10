@@ -10,7 +10,7 @@ type OrderInfo struct {
 	OrderAmount float64 `xorm:"decimal(10,2)" json:"order_amount" form:"order_amount"`
 	Pos int `xorm:tinyint(1) json:"pos" form:"pos"`
 	Number string `xorm:"varchar(5)" json:"number" form:"number"`
-	Odds float64 `xorm:"decimal(10,2)" json:"Odds" form:"Odds"`
+	Odds float64 `xorm:"decimal(10,2)" json:"odds" form:"odds"`
 	CreateTime int64 `xorm:"int(11)" json:"create_time" from:"create_time"`
 	UpdateTime int64 `xorm:"int(11)" json:"update_time" from:"update_time"`
 }
